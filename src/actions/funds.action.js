@@ -63,9 +63,10 @@ function createFunds(clients,fundName,sharesOwned,marketValue,pricePerShare,expi
             status: 'ACTIVE'
         }
         fundService.post(payload)
-        .then((response)=>{   
-             response.status === httpStatus.SUCCESS ? dispatch(setStatus(true)) :dispatch(setStatus(false));     
-            }
+        .then((response)=>{
+            response.status === httpStatus.SUCCESS ? dispatch(setStatus(true)) :dispatch(setStatus(false));
+            history.push('/dashboard');
+        }
         )
     };
 }

@@ -40,16 +40,6 @@ class Funds extends Component {
       open:false
     }
   }
-  // getDetails = (rowData) => {
-  //   const { dispatch } = this.props;
-  //   dispatch(fundsActions.getFundDetailsById(rowData.id));
-  // }
-
-//   handleOpen = event => {
-//     this.setState({
-//         open: true
-//     })
-// }
   render() {
 
     const tableIcons = {
@@ -70,15 +60,16 @@ class Funds extends Component {
     }
     const { funds, loading } = this.props.funds;
     const {classes} = this.props;
+    console.log(funds)
     const resp = {
       columns: [
         { title: 'Funds', field: 'fund_name' },
         { title: 'Price/Share', field: 'price_per_share' ,type: 'numeric'},
         { title: 'Shares Owned', field: 'shares_owned', type: 'numeric' },
         { title: 'Market Value', field: 'market_value',type: 'numeric'},
-        { title: 'Clients', field: 'clients' , render: rowData =>{
+        { title: 'Clients', field: 'clients' ,sorting : true, render: rowData =>{
             const length = rowData.clients.split(",").length
-           return (length > 1)? length +' Clients' : length +' Client'
+           return (length > 1)? length +' Clients' : (Boolean(rowData.clients)? length +' Client' : 'No Client')
           }},
         { title: '', field: 'action' ,sorting : false, render : rowData =><Button color="primary" className={classes.button} component={Link} to={{pathname: "/dashboard/update",state: { data: rowData } }}>details</Button> },
       ],

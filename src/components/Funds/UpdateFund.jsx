@@ -8,13 +8,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import InputLabel from '@material-ui/core/InputLabel';
-import Container from '@material-ui/core/Container';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import { clientActions } from '../../actions';
 import Constant from '../../config/constant';
 import Typography from '@material-ui/core/Typography';
@@ -27,41 +24,48 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = theme => ({
+  button: { textTransform: 'none' },
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-},
+  }
 });
 
 class UpdateFund extends Component {
 
   constructor(props) {
     super();
+    this.state = {
+      open : false,
+      anchorEl: null
+    }
   }
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
 
+  handleClose = (event) => {
+    this.setState({open: !this.state.open,anchorEl: event.currentTarget})
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(clientActions.getClients({}));
+  }
+
   render() {
     const { classes, clients } = this.props;
     const isOpen = this.props.open;
-    const { data}  = this.props.location.state;
-    console.log(data)
+    const { data } = this.props.location.state;
+    let clientList = []
+    let clientAdded = data.clients.split(",").map(Number)
+    const clientResp = (clientAdded.length>1) ? clientAdded.length + "Clients" : (data.clients ? "1 Client": "No Client" )
+    if (clients.clients) {  clientList = clients.clients.map((a) => { return clientAdded.includes(a.id) ?  a : ''}).filter(item => !!item)}
     return (
       <React.Fragment>
         <CssBaseline />
@@ -85,39 +89,43 @@ class UpdateFund extends Component {
                     <Typography variant="h6" component="h6" align="center">Fund Details</Typography>
                     <Divider />
                     <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Fund Name</TableCell>
-                        <TableCell align="right">Price/Share</TableCell>
-                        <TableCell align="right">Market Value</TableCell>
-                        <TableCell align="right">Shares Owned</TableCell>
-                        <TableCell align="right">Clients</TableCell>
-                        <TableCell align="right">Created Date</TableCell>
-                        <TableCell align="center">Action</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow key={data.id}>
-                        <TableCell component="th" scope="row">
-                          {data.fund_name}
-                        </TableCell>
-                        <TableCell align="right">{data.price_per_share}</TableCell>
-                        <TableCell align="right">{data.market_value}</TableCell>
-                        <TableCell align="right">{data.shares_owned}</TableCell>
-                        <TableCell align="right">{data.clients}</TableCell>
-                        <TableCell align="right">{(new Date(data.created_dt)).toLocaleDateString('en-US', Constant.DATE_OPTIONS)}</TableCell>
-                        <TableCell>
-                          <IconButton aria-label="update fund">
-                            <EditIcon color="primary"/>
-                          </IconButton>
-                          <IconButton aria-label="delete fund">
-                            <DeleteIcon color="primary"/>
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                  </TableBody>
-                    </Table>
+                      <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Fund Name</TableCell>
+                            <TableCell align="right">Price/Share</TableCell>
+                            <TableCell align="right">Market Value</TableCell>
+                            <TableCell align="right">Shares Owned</TableCell>
+                            <TableCell align="left">Clients</TableCell>
+                            <TableCell align="left">Created Date</TableCell>
+                            <TableCell align="center">Action</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          <TableRow key={data.id}>
+                            <TableCell component="th" scope="row">
+                              {data.fund_name}
+                            </TableCell>
+                            <TableCell align="right">{data.price_per_share}</TableCell>
+                            <TableCell align="right">{data.market_value}</TableCell>
+                            <TableCell align="right">{data.shares_owned}</TableCell>
+                            <TableCell align="left">
+                              <Button aria-controls="simple-menu" onClick={this.handleClose} className={classes.button}>{clientResp}</Button>
+                              <Menu id="simple-menu" anchorEl={this.state.anchorEl} getContentAnchorEl={null} anchorOrigin={{ vertical: "bottom", horizontal: "center" }} keepMounted open={this.state.open} onClose={this.handleClose}>
+                                {clientList.map((a) => {
+                                  return (<MenuItem key= {a.id}>{a.name}</MenuItem>)
+                                })}
+                              </Menu>
+                            </TableCell>
+                            <TableCell align="left">{(new Date(data.created_dt)).toLocaleDateString('en-US', Constant.DATE_OPTIONS)}</TableCell>
+                            <TableCell>
+                              <IconButton aria-label="update fund">
+                                <EditIcon color="primary" />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
                     </TableContainer>
                   </Grid>
                 </Grid>

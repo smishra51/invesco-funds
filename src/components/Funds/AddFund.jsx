@@ -19,9 +19,16 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const styles = theme => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
   paper: {
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
@@ -43,7 +50,7 @@ class AddFund extends Component {
     super();
     this.state = {
       loading : false,
-      clients: '',
+      clients: [],
       fundName: '',
       sharesOwned: '',
       marketValue: '',
@@ -62,20 +69,16 @@ class AddFund extends Component {
   }
 
   createFund = () => {
-    this.setState({loading: true});
     const { clients, fundName, sharesOwned, marketValue, pricePerShare, expiryDate } = this.state;
     const { dispatch } = this.props;
-    dispatch(fundsActions.createFunds(clients, fundName, sharesOwned, marketValue, pricePerShare, expiryDate));
+    dispatch(fundsActions.createFunds(clients.join(), fundName, sharesOwned, marketValue, pricePerShare, expiryDate));
+    this.setState({loading: true});
   }
 
   render() {
     const { classes, clients } = this.props;
     const isOpen = this.props.open;
-    const { status } = this.props.funds;
-    if(status)  {
-      this.setState({loading:false})
-      this.props.history.goBack()
-    }
+    const loader = <CircularProgress/>
     return (
       <React.Fragment>
         <CssBaseline />
@@ -141,6 +144,7 @@ class AddFund extends Component {
                           onChange={this.handleChange('clients')}
                           label="Select Clients"
                           size='small'
+                          multiple
                         >
                           <MenuItem value="0">
                             <em>None</em>
@@ -197,12 +201,13 @@ class AddFund extends Component {
                       />
                     </Grid>
                     <Grid container spacing={3} justify="center" >
-                    <Grid item xs={3} >
-                      <Button variant="contained" type="submit" color="primary" className={classes.submit} disabled={this.state.loading} >Add Fund</Button>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Button variant="contained" color="primary" className={classes.submit} onClick={this.props.history.goBack} >Close</Button>
-                    </Grid>
+                      {!this.state.loading ? '' : loader}
+                      <Grid item xs={3} >
+                        <Button variant="contained" type="submit" color="primary" className={classes.submit} disabled={this.state.loading} >Add Fund</Button>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Button variant="contained" color="primary" className={classes.submit} onClick={this.props.history.goBack} >Close</Button>
+                      </Grid>
                     </Grid>
                   </ValidatorForm>    
                 </Grid>
@@ -222,8 +227,7 @@ AddFund.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    clients: state.clients,
-    funds: state.fund
+    clients: state.clients
   };
 }
 
