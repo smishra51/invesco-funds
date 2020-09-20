@@ -1,0 +1,68 @@
+{
+    "data": [
+        {
+            "name": "AT CPT Pvt. Ltd",
+            "per_share_price": 12,
+            "share_owned": 1987,
+            "market_value": 62,
+            "clients": 1,
+            "id" :21
+        },
+        {
+            "name": "Sensui Limited Corp",
+            "per_share_price": 23,
+            "share_owned": 453,
+            "market_value": 34,
+            "clients": 2,
+            "id" :23
+        },
+        {
+            "name": "Jai dsfs Ltd",
+            "per_share_price": 64,
+            "share_owned": 786,
+            "market_value": 162,
+            "clients": 4,
+            "id" :24
+        },
+        {
+            "name": "Tech Mahindra Ltd",
+            "per_share_price": 34,
+            "share_owned": 231,
+            "market_value": 642,
+            "clients": 6,
+            "id" :26
+        },
+        {
+            "name": "LTI Limited",
+            "per_share_price": 53,
+            "share_owned": 778,
+            "market_value": 625,
+            "clients": 1,
+            "id" :25
+        },
+        {
+            "name": "Infosys Limited",
+            "per_share_price": 73,
+            "share_owned": 7656,
+            "market_value": 621,
+            "clients": 2,
+            "id" :27
+        },
+        {
+            "name": "Cognigent Corp",
+            "per_share_price": 23,
+            "share_owned": 121,
+            "market_value": 632,
+            "clients": 1,
+            "id" :28
+        },
+        {
+            "name": "Hindustan Private Bank Limited",
+            "per_share_price": 55,
+            "share_owned": 5432,
+            "market_value": 612,
+            "clients": 1,
+            "id" :29
+        }
+    ]
+}
