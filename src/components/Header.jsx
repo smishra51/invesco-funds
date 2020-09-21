@@ -180,9 +180,9 @@ class Header extends Component {
                             </List>
                             <Divider />
                             <List>
-                                <ListItem button key={'Profile'} component= {ReactLink} to='/profile'>
+                                <ListItem button key={'My Profile'} component= {ReactLink} to='/profile'>
                                     <ListItemIcon><AccountCircleIcon /></ListItemIcon>
-                                    <ListItemText primary={'Profile'} />
+                                    <ListItemText primary={'My Profile'} />
                                 </ListItem>
                                     <ListItem button key={'createFund'} component={ReactLink} 
                                         to={{pathname: "/dashboard/add",state: { fromDashboard: true } }}>
