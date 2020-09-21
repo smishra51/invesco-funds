@@ -1,6 +1,6 @@
 export default  {
     baseUrl: 'https://i171qxn6k9.execute-api.us-west-2.amazonaws.com/v1/inv/',
-    authUrl: 'https://i171qxn6k9.execute-api.us-west-2.amazonaws.com/v1/inv/login',
+    authUrl: 'https://i171qxn6k9.execute-api.us-west-2.amazonaws.com/v1/inv/login_second',
     apiKey:  '',
     userDetails: 'user',
     cliets : {
