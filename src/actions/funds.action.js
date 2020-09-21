@@ -7,7 +7,8 @@ export const fundsActions = {
     getFundDetailsById,
     getFundDetailsByName,
     toggleFundModel,
-    createFunds
+    createFunds,
+    updateFund
 };
 
 function getFunds(payload) {
@@ -71,6 +72,25 @@ function createFunds(clients,fundName,sharesOwned,marketValue,pricePerShare,expi
     };
 }
 
+function updateFund(userId,clients,sharesOwned,marketValue,pricePerShare,expiryDate,fundId) {
+    return dispatch => {
+        let payload = {
+            id:fundId,
+            clients:clients,
+            market_value: marketValue,
+            price_per_share: pricePerShare,
+            modified_by: userId,
+            expiry_dt: expiryDate,
+            shares_owned: sharesOwned,
+        }
+        fundService.put(payload)
+        .then((response)=>{
+            response.status === httpStatus.SUCCESS ? dispatch(setStatus(true)) :dispatch(setStatus(false));
+            history.push('/dashboard');
+        }
+        )
+    };
+}
 function toggleFundModel(action) {
     return dispatch => {
         dispatch(toggleAction(action))

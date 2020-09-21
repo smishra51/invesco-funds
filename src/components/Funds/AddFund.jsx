@@ -19,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgress } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -78,7 +78,6 @@ class AddFund extends Component {
   render() {
     const { classes, clients } = this.props;
     const isOpen = this.props.open;
-    const loader = <CircularProgress/>
     return (
       <React.Fragment>
         <CssBaseline />
@@ -201,9 +200,10 @@ class AddFund extends Component {
                       />
                     </Grid>
                     <Grid container spacing={3} justify="center" >
-                      {!this.state.loading ? '' : loader}
-                      <Grid item xs={3} >
-                        <Button variant="contained" type="submit" color="primary" className={classes.submit} disabled={this.state.loading} >Add Fund</Button>
+                      <Grid item xs={5} >
+                        <Button variant="contained" type="submit" color="primary" fullWidth className={classes.submit} disabled={this.state.loading} >
+                        {this.state.loading && <CircularProgress size={24} />}
+                          Add Fund</Button>
                       </Grid>
                       <Grid item xs={3}>
                         <Button variant="contained" color="primary" className={classes.submit} onClick={this.props.history.goBack} >Close</Button>

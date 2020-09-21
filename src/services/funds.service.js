@@ -1,7 +1,7 @@
 import config from '../config/config';
 import axios from 'axios';
 export const fundService = {
-    get, getById,getByName,post
+    get, getById,getByName,post,put
 };
 
 
@@ -55,6 +55,21 @@ function post(payload) {
     }
   };
   return axios.post(config.baseUrl+config.funds.getAllfunds, payload, header).then((response) => {
+      return response;
+  }).catch((err) => {
+      console.log(err);
+  })
+}
+
+function put(payload) {
+  const header = {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': config.apiKey,
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  };
+  return axios.put(config.baseUrl+config.funds.getAllfunds, payload, header).then((response) => {
       return response;
   }).catch((err) => {
       console.log(err);

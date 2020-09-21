@@ -3,7 +3,7 @@ let auth = localStorage.getItem('auth');
 let userName = localStorage.getItem('userName');
 let userId = localStorage.getItem('userId');
 
-const initialState = auth ? { loggedIn: true, auth, token, errorMessage : "",userName,userId} : { loggedIn: false ,errorMessage:"",userId:'',userName:''};
+const initialState = auth ? { loggedIn: true, auth, token, errorMessage : "",userName,userId, disabled: true} : { loggedIn: false ,errorMessage:"",userId:'',userName:'', disabled:false};
 
 export function authentication(state = initialState, action) {
     switch (action.type) {
@@ -22,7 +22,8 @@ export function authentication(state = initialState, action) {
         case 'LOGIN_FAILED':
             return {
                 auth: false,
-                errorMessage: action.erroMessage
+                errorMessage: action.erroMessage,
+                disabled: action.disabled
             };
         default:
             return state

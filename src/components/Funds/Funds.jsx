@@ -60,7 +60,6 @@ class Funds extends Component {
     }
     const { funds, loading } = this.props.funds;
     const {classes} = this.props;
-    console.log(funds)
     const resp = {
       columns: [
         { title: 'Funds', field: 'fund_name' },
@@ -68,7 +67,7 @@ class Funds extends Component {
         { title: 'Shares Owned', field: 'shares_owned', type: 'numeric' },
         { title: 'Market Value', field: 'market_value',type: 'numeric'},
         { title: 'Clients', field: 'clients' ,sorting : true, render: rowData =>{
-            const length = rowData.clients.split(",").length
+           let length = Array.isArray(rowData.clients) ? rowData.clients.length: rowData.clients.split(",").length;
            return (length > 1)? length +' Clients' : (Boolean(rowData.clients)? length +' Client' : 'No Client')
           }},
         { title: '', field: 'action' ,sorting : false, render : rowData =><Button color="primary" className={classes.button} component={Link} to={{pathname: "/dashboard/update",state: { data: rowData } }}>details</Button> },

@@ -11,6 +11,7 @@ function login(username, password) {
             email: username,
             password: password
         }
+        dispatch(disabledLogin(true));
         loginService.post(payload)
             .then((response) => {
                 if (response.data['access-token']) {
@@ -52,6 +53,13 @@ function invalidlogin() {
         history.push('/');
     }
 }
+
+
+function disabledLogin(disable) {
+    return dispatch => {
+        dispatch(disableLogin(disable));
+    }
+}
 export function setUserDetails(token, userClaims) {
     return {
         type: "LOGIN_SUCCESS",
@@ -73,7 +81,16 @@ export function logoutUser() {
 export function loginFailed() {
     return {
         type: "LOGIN_FAILED",
+        disabled:false,
         erroMessage: CONSTANT.LOGIN_ERROR_MESSAGE
+
+    }
+}
+
+export function disableLogin(disable) {
+    return {
+        type: "LOGIN_FAILED",
+        disabled:true
     }
 }
 

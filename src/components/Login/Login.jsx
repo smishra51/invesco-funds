@@ -25,7 +25,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import { CircularProgress } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
@@ -60,8 +60,9 @@ class Login extends Component {
         this.state = {
                 username: '',
                 password: '',
-                submitted: false,
-                showPassword: false
+                showPassword: false,
+                setOpen:true,
+                errorMessage : ''
         }
     }
 
@@ -73,12 +74,10 @@ class Login extends Component {
     handleChange = prop => event => {
         this.setState({ [prop]: event.target.value });
     };
-    // closeIcon = () => {
-    //     this.setState({ setOpen: false });
-    // }
+    closeIcon = () => {
+        this.setState({ setOpen: !this.state.setOpen });
+    }
     login = () => {
-
-        //  this.setState({ submitted: true });
         const { username, password } = this.state;
         const { dispatch } = this.props;
         if (username && password) {
@@ -91,16 +90,16 @@ class Login extends Component {
     handleMouseDownPassword = (event) => {
         event.preventDefault();
       };
+
     render() {
         const { classes } = this.props;
         let message = '';
-
-        if (this.props.authentication.errorMessage) {
+        if (this.props.authentication.errorMessage && this.state.setOpen ) {
             message = <div className={classes.root}>
-                <Collapse in={this.state.setOpen}>
+                <Collapse in={true}>
                     <Alert severity="error"
                         action={
-                            <IconButton aria-label="close" color="inherit" size="small" onClick={() => this.closeIcon()}>
+                            <IconButton  color="inherit" size="small" onClick={() => this.closeIcon()}>
                                 <CloseIcon fontSize="inherit" />
                             </IconButton>
                         }>
@@ -112,6 +111,7 @@ class Login extends Component {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
+                    {message}
                     <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar>
                     <Typography component="h1" variant="h5">Sign in</Typography>
                     <ValidatorForm ref="form" onSubmit={this.login} className={classes.form}>
@@ -149,7 +149,6 @@ class Login extends Component {
                                 ),
                               }}
                         />
-                        {message}
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
@@ -159,9 +158,11 @@ class Login extends Component {
                             variant="contained"
                             color="primary"
                             type="submit"
-                            disabled={this.state.submitted}
+                            disabled={this.props.authentication.disabled}
                             className={classes.submit}
-                        >Sign In</Button>
+                        >
+                            {this.props.authentication.disabled && <CircularProgress size={24} />}
+                             Sign In</Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -190,7 +191,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        authentication: state.authentication
+        authentication: state.authentication,
     };
 }
 const connectedLoginPage = withRouter(connect(mapStateToProps, null, null, {
