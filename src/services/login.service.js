@@ -4,15 +4,9 @@ import config from '../config/config';
 export const loginService = {
     post,getUserDetails
 };
-const header = {
-    headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': config.apiKey
-    }
-};
 
 function post(payload){
-    return axios.post(config.authUrl, payload, header).then((response)=>{
+    return axios.post(config.authUrl, payload).then((response)=>{
         return response;
     })
 }
@@ -20,8 +14,6 @@ function post(payload){
  function getUserDetails(token) {
     const authHeader = {
         headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': config.apiKey,
             'Authorization' : 'Bearer ' +token
         }
     };

@@ -20,7 +20,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-// import { FundDetailPage } from './FundDetailPage'
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
   button: { textTransform: 'none' },
@@ -70,7 +70,7 @@ class Funds extends Component {
            let length = Array.isArray(rowData.clients) ? rowData.clients.length: rowData.clients.split(",").length;
            return (length > 1)? length +' Clients' : (Boolean(rowData.clients)? length +' Client' : 'No Client')
           }},
-        { title: '', field: 'action' ,sorting : false, render : rowData =><Button color="primary" className={classes.button} component={Link} to={{pathname: "/dashboard/update",state: { data: rowData } }}>details</Button> },
+        { title: '', field: 'action' ,sorting : false, render : rowData =><Button color="primary" startIcon={<EditIcon />}  className={classes.button} component={Link} to={{pathname: "/dashboard/update",state: { data: rowData } }}/> },
       ],
     }
     return (
