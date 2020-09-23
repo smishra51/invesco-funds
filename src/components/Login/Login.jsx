@@ -149,10 +149,10 @@ class Login extends Component {
                                 ),
                               }}
                         />
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
                             label="Remember me"
-                        />
+                        /> */}
                         <Button
                             fullWidth
                             variant="contained"
@@ -163,7 +163,7 @@ class Login extends Component {
                         >
                             {this.props.authentication.disabled && <CircularProgress size={24} />}
                              Sign In</Button>
-                        <Grid container>
+                        {/* <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
                                     Forgot password?  
@@ -174,7 +174,7 @@ class Login extends Component {
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
                     </ValidatorForm>
 
                 </div>
