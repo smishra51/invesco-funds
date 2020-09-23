@@ -8,5 +8,6 @@ export default {
     UNAUTHORIZED : 401,
     FORBIDDEN : 403,
     LOGIN_ERROR_MESSAGE : "username and password are invalid",
-    SUCCESS : 200
+    SUCCESS : 200,
+    SERVER_ERROR: 500,
 }

@@ -13,18 +13,3 @@ function get() {
         }
       });
     }
-
-// function get() {
-//   const header = {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'x-api-key': config.apiKey,
-//       'Authorization': 'Bearer ' + localStorage.getItem('token')
-//     }
-//   };
-//   return axios.get(config.baseUrl + config.cliets.getAllClients, header).then((response) => {
-//     return response;
-//   }).catch((err) => {
-//     console.log(err);
-//   })
-// }

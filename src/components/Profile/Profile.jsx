@@ -71,7 +71,7 @@ constructor(props) {
                                 <Typography align="left">Email</Typography>
                             </Grid>
                             <Grid item xs = {6}>
-                                <Typography align="left">testuser@test.com</Typography>
+                                <Typography align="left">{authentication.email}</Typography>
                             </Grid>
                             <Grid item xs = {4}>
                                 <Typography align="left">Contact No</Typography>

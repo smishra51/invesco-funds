@@ -22,7 +22,8 @@ function login(username, password) {
                             localStorage.setItem('token', token);
                             localStorage.setItem('auth', true);
                             localStorage.setItem('userName', claims.firstName + ' ' + claims.lastName);
-                            localStorage.setItem('userId', 1);
+                            localStorage.setItem('userId', claims.user_id);
+                            localStorage.setItem('email', claims.email);
                             dispatch(setUserDetails(token, claims));
                             history.push('/dashboard');
                         }
@@ -66,7 +67,8 @@ export function setUserDetails(token, userClaims) {
         auth: true,
         token: token,
         userName: userClaims.firstName + ' ' + userClaims.lastName,
-        userId: 1
+        userId: userClaims.user_id,
+        email: userClaims.email
     }
 }
 export function logoutUser() {
